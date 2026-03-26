@@ -4,11 +4,11 @@ import "./App.css";
 import { generatePalette } from "./utils/generatePalette";
 import ColorRoot from "./components/ColorRoot";
 
-type PaletteType = "triad" | "complementary" | "mono";
+type PaletteType = "triad" | "complementary" | "mono" | "analog";
 
 function App() {
   const [palette, setPalette] = useState([]);
-  const [type, setType] = useState<PaletteType>("triad");
+  const [type, setType] = useState<PaletteType>("mono");
 
   const generateRandom = (type: PaletteType) => {
     setPalette(generatePalette(type))
@@ -29,12 +29,15 @@ function App() {
             name="colorOption"
             className="text-white bg-[#151922] border border-[#ffffff2d] p-2 w-55 rounded-md mb-4  outline-none"
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              setType(e.target.value as Type)
+              setType(e.target.value as PaletteType)
             }
           >
-            
-            <option value="mono">Monocromático</option>
+            <option value="mono" selected>Monocromático</option>
             <option value="complementary">Complementar</option>
+            <option value="triad">
+              Tríade
+            </option>
+            <option value="analog">Análogo</option>
           </select>
           <button className="bg-[#f89917] py-3 rounded-md font-semibold cursor-pointer" onClick={() => generateRandom(type)}>
             Gerar Paleta
