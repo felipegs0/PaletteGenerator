@@ -6,21 +6,21 @@ type HSL = {
   lightness: number;
 };
 
+// Criar uma config para cada paleta depois usando objeto
+
 import { hslToHex } from "./colorHelpers";
 
 export function generatePalette(type: PaletteType) {
   const paletteHSL = {
     baseHue: Math.random() * 360,
-    saturation: 70,
-    lightness: 50,
   };
 
   if (type == "triad") {
-    return triadPalette(paletteHSL);
+    return triadPalette({baseHue: Math.random() * 360, saturation: 70, lightness: 0});
   }
 
   if (type == "mono") {
-    return monoPalette(paletteHSL);
+    return monoPalette({baseHue: Math.random() * 360, saturation: 70, lightness: 50});
   }
 
   if (type == "complementary") {
@@ -33,21 +33,42 @@ export function generatePalette(type: PaletteType) {
 }
 
 function triadPalette({ baseHue, saturation, lightness }: HSL) {
-  const secondColor = (baseHue + 120) % 360;
-  const thirdColor = (baseHue + 240) % 360;
+  const secondHue = (baseHue + 120) % 360;
+  const thirdHue = (baseHue + 240) % 360;
 
-  return [baseHue, secondColor, thirdColor].map((h) =>
-    hslToHex(h, saturation, lightness),
-  );
+  const colors = [
+    hslToHex(baseHue, saturation, lightness + 50),
+    hslToHex(baseHue, saturation, lightness + 15),
+    hslToHex(secondHue, saturation, lightness + 50),
+    hslToHex(secondHue, saturation, lightness + 98),
+    hslToHex(thirdHue, saturation, lightness + 95),
+  ]
+
+  return {
+    bg: colors[4],
+    surface: colors[3],
+    text: colors[1],
+    primary: colors[0],
+    secondary: colors[2],
+  }
 }
 
 function monoPalette({ baseHue, saturation, lightness }: HSL) {
-  const firstColor = hslToHex(baseHue, saturation, lightness);
-  const secondColor = hslToHex(baseHue, saturation, lightness - 20);
-  const thirdColor = hslToHex(baseHue, saturation, lightness - 30);
-  const fourthColor = hslToHex(baseHue, saturation, lightness - 40);
+  const colors = [
+    hslToHex(baseHue, saturation - 50, lightness + 40),
+    hslToHex(baseHue, saturation - 30, lightness + 20),
+    hslToHex(baseHue, saturation + 10, lightness),
+    hslToHex(baseHue, saturation + 20, lightness - 20),
+    hslToHex(baseHue, saturation + 25, lightness - 35),
+  ]
 
-  return [firstColor, secondColor, thirdColor, fourthColor];
+  return {
+    bg: colors[1],
+    surface: colors[0],
+    text: colors[4],
+    primary: colors[3],
+    secondary: colors[2]
+  }
 }
 
 function complementaryPalette({ baseHue, saturation, lightness }: HSL) {
@@ -72,6 +93,6 @@ function analogPalette({ baseHue, saturation, lightness }: HSL) {
     hslToHex(baseHue, saturation, lightness),
     hslToHex(secondColor, saturation, lightness + 5),
     hslToHex(thirdColor, saturation, lightness - 5),
-    hslToHex(fourthColor, saturation, lightness + 10)
-  ]
+    hslToHex(fourthColor, saturation, lightness + 10),
+  ];
 }

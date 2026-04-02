@@ -3,33 +3,31 @@ import ColorCard from "./components/ColorCard";
 import "./App.css";
 import { generatePalette } from "./utils/generatePalette";
 import ColorRoot from "./components/ColorRoot";
+import DefaultPreview from "./components/DefaultPreview";
 
 type PaletteType = "triad" | "complementary" | "mono" | "analog";
 
+type PaletteColors = {
+  bg: string;
+  surface: string;
+  text: string;
+  primary: string;
+  secondary: string;
+}
+
 function App() {
-  const [palette, setPalette] = useState([]);
+  const [palette, setPalette] = useState<PaletteColors | null>(null);
   const [type, setType] = useState<PaletteType>("mono");
   const [mode, setMode] = useState(true);
 
-  const monoPalette = {
-    bg: palette[0],
-    surface: "#fff",
-    text: palette[3],
-    primary: palette[1],
-    secondary: palette[2],
-  }
-
   const generateRandom = (type: PaletteType) => {
     setPalette(generatePalette(type));
-    console.log(palette);
   };
 
   const exportCSS = () => {
-    let variables = "";
-    for (let i = 0; i < palette.length; i++) {
-      variables += `   --color-${i + 1}: ${palette[i]}; \n`;
-    }
-    const css = `:root {\n${variables}}`;
+    const variables = Object.values(palette).join("\n");
+
+    const css = `:root {\n${variables}\n}`;
     navigator.clipboard.writeText(css);
   };
 
@@ -71,10 +69,10 @@ function App() {
           </button>
         </div>
         <div className="bg-[#141821] flex flex-col h-[85vh] border border-[#ffffff13] rounded-br-md rounded-tr-md">
-          {mode ? (
+          {mode && palette ? (
             <>
-              <div className="grid grid-cols-4 gap-2 w-270 p-7 h-250 ">
-                {palette.map((color, i) => (
+              <div className="grid grid-cols-5 gap-2 w-270 p-7 h-250 ">
+                {Object.entries(palette).map(([i, color]) => (
                   <ColorCard key={i} color={color} />
                 ))}
               </div>
@@ -85,8 +83,8 @@ function App() {
                 <div className="bg-[#141821] flex flex-col p-5 border border-[#ffffff23] rounded-md relative">
                   <p className="text-white font-mono">:root {" { "}</p>
                   <div className="flex flex-col pl-5">
-                    {palette.map((color, i) => (
-                      <ColorRoot num={i} color={color} />
+                    {Object.entries(palette).map(([role, color]) => (
+                      <ColorRoot role={role} color={color} />
                     ))}
                   </div>
                   <p className="text-white font-mono">{" } "}</p>
@@ -99,105 +97,9 @@ function App() {
                 </div>
               </div>
             </>
-          ) : (
-            <>
-              <div className="w-270 overflow-auto" style={{ backgroundColor: monoPalette.bg }}>
-                <header className="shadow-sm" style={{ background: monoPalette.surface }}>
-                  <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-                    <div className="font-black text-2xl tracking-tighter" style={{ color: monoPalette.primary }}>
-                      BrandLogo
-                    </div>
-                    <nav className="hidden md:flex gap-6 font-medium">
-                      <a
-                        href="#"
-                        className={`hover:underline transition-colors`}
-                        style={{ color: monoPalette.text }}
-                      >
-                        Produtos
-                      </a>
-                      <a
-                        href="#"
-                        className={`hover:underline transition-colors`}
-                        style={{ color: monoPalette.text }}
-                      >
-                        Serviços
-                      </a>
-                      <a
-                        href="#"
-                        className={`hover:underline transition-colors`}
-                        style={{ color: monoPalette.text }}
-                      >
-                        Sobre
-                      </a>
-                    </nav>
-                    <button className={` px-5 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity cursor-pointer`} style={{ color: monoPalette.surface, background: monoPalette.primary }}>
-                      Entrar
-                    </button>
-                  </div>
-                </header>
-
-                <main className="max-w-6xl mx-auto px-4 py-20 flex flex-col items-center text-center">
-                  <h1 className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
-                    Transforme suas ideias em{" "}
-                    <span style={{ color: monoPalette.secondary }}>realidade</span>
-
-                  </h1>
-                  <p className="text-lg opacity-80 mb-10 max-w-2xl">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis tempora tenetur necessitatibus aut deleniti, doloribus impedit rerum aspernatur.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <button className="px-8 py-3 rounded-lg font-bold shadow-lg hover:-translate-y-1 transition-transform cursor-pointer" style={{ color: monoPalette.surface, background: monoPalette.primary }}>
-                      Começar Agora
-                    </button>
-                    <button className=" px-8 py-3 rounded-lg font-bold shadow-lg hover:-translate-y-1 transition-transform cursor-pointer" style={{ color: monoPalette.surface, background: monoPalette.primary }}>
-                      Ver Demonstração
-                    </button>
-                  </div>
-                </main>
-
-                <section className="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <div className="p-8 rounded-2xl shadow-md flex flex-col items-start" style={{ background: monoPalette.surface }}>
-                    <div className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl mb-6" style={{ background: monoPalette.primary, color: monoPalette.surface }}>
-                      1
-                    </div>
-                    <h3 className="text-xl font-bold mb-3">Alta Performance</h3>
-                    <p className="opacity-75 leading-relaxed">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia fugit, laudantium, modi, facere consequuntur voluptas aliquid quos non asperiores numquam dolore debitis. 
-                    </p>
-                  </div>
-
-                  <div className="p-8 rounded-2xl shadow-md flex flex-col items-start border-secondary" style={{ background: monoPalette.surface, borderColor: monoPalette.secondary }}>
-                    <div className="bg-secondary w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl mb-6" style={{ background: monoPalette.primary, color: monoPalette.surface }}>
-                      2
-                    </div>
-                    <h3 className="text-xl font-bold mb-3">Design Flexível</h3>
-                    <p className="opacity-75 leading-relaxed">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam odio eaque saepe commodi totam voluptas.
-                    </p>
-                  </div>
-
-                  <div className=" p-8 rounded-2xl shadow-md flex flex-col items-start" style={{ background: monoPalette.surface}}>
-                    <div className=" w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl mb-6" style={{ background: monoPalette.primary, color: monoPalette.surface }}>
-                      3
-                    </div>
-                    <h3 className="text-xl font-bold mb-3">Acessibilidade</h3>
-                    <p className="opacity-75 leading-relaxed">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, consequatur. Illo nam deserunt sunt sapiente qui facilis itaque.
-                    </p>
-                  </div>
-                </section>
-
-                <footer className="bg-surface mt-12 py-8" style={{ background: monoPalette.surface }}>
-                  <div className="max-w-6xl mx-auto px-4 text-center opacity-60 font-medium">
-                    <p>
-                      Criado para testar geradores de
-                      cores.
-                    </p>
-                  </div>
-                </footer>
-              </div>
-            </>
-          )}
+          ) : palette ? (
+            <DefaultPreview bg={palette.bg} surface={palette.surface} text={palette.text} primary={palette.primary} secondary={palette.secondary}/>
+          ) : null }
         </div>
       </div>
     </>

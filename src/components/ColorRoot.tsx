@@ -1,7 +1,7 @@
-function ColorRoot({ color, num }: { color: string, num: number }) {
+function ColorRoot({ color, role }: { color: string, role: string }) {
   return (
     <p className="text-[#f89917] font-mono">
-      --color-{num + 1}: <span className="text-white">{color};</span>
+      --color-{role}: <span className="text-white">{color};</span>
     </p>
   );
 }
