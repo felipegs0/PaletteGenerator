@@ -24,7 +24,7 @@ export function generatePalette(type: PaletteType) {
   }
 
   if (type == "complementary") {
-    return complementaryPalette(paletteHSL);
+    return complementaryPalette({baseHue: Math.random() * 360, saturation: 70, lightness: 50});
   }
 
   if (type == "analog") {
@@ -73,15 +73,20 @@ function monoPalette({ baseHue, saturation, lightness }: HSL) {
 
 function complementaryPalette({ baseHue, saturation, lightness }: HSL) {
   const complementaryHue = (baseHue + 180) % 360;
-
-  const clamp = (value: number) => Math.max(0, Math.min(100, value));
-
-  return [
-    hslToHex(baseHue, saturation, clamp(lightness)),
-    hslToHex(baseHue, saturation, clamp(lightness + 15)),
-    hslToHex(complementaryHue, saturation, clamp(lightness)),
-    hslToHex(complementaryHue, saturation, clamp(lightness - 15)),
+  const colors = [
+    hslToHex(baseHue, saturation, lightness - 35),
+    hslToHex(baseHue, saturation - 20, lightness + 30),
+    hslToHex(baseHue, saturation, lightness + 45),
+    hslToHex(complementaryHue, saturation, lightness),
+    hslToHex(complementaryHue, saturation, lightness - 15),
   ];
+  return {
+    bg: colors[1],
+    surface: colors[2],
+    text: colors[0],
+    primary: colors[4],
+    secondary: colors[3]
+  }
 }
 
 function analogPalette({ baseHue, saturation, lightness }: HSL) {
