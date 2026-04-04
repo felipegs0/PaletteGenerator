@@ -84,8 +84,8 @@ function DefaultPreview({
 
         <section className="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div
-            className="p-8 rounded-2xl shadow-md flex flex-col items-start border"
-            style={{ background: surface, borderColor: secondary }}
+            className="p-8 rounded-2xl shadow-md flex flex-col items-start "
+            style={{ background: surface }}
           >
             <div
               className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl mb-6"
@@ -102,8 +102,8 @@ function DefaultPreview({
           </div>
 
           <div
-            className="p-8 rounded-2xl shadow-md flex flex-col items-start border"
-            style={{ background: surface, borderColor: secondary }}
+            className="p-8 rounded-2xl shadow-md flex flex-col items-start "
+            style={{ background: surface }}
           >
             <div
               className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl mb-6"
@@ -119,8 +119,8 @@ function DefaultPreview({
           </div>
 
           <div
-            className=" p-8 rounded-2xl shadow-md flex flex-col items-start border"
-            style={{ background: surface, borderColor: secondary }}
+            className=" p-8 rounded-2xl shadow-md flex flex-col items-start "
+            style={{ background: surface }}
           >
             <div
               className=" w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl mb-6"

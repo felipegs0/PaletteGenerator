@@ -28,7 +28,7 @@ export function generatePalette(type: PaletteType) {
   }
 
   if (type == "analog") {
-    return analogPalette(paletteHSL);
+    return analogPalette({baseHue: Math.random() * 360, saturation: 70, lightness: 50});
   }
 }
 
@@ -93,11 +93,21 @@ function analogPalette({ baseHue, saturation, lightness }: HSL) {
   const secondColor = (baseHue + 30) % 360;
   const thirdColor = (baseHue - 30 + 360) % 360;
   const fourthColor = (baseHue + 60) % 360;
+  const fifthColor = (baseHue - 60 + 360) % 360;
 
-  return [
+  const colors = [
     hslToHex(baseHue, saturation, lightness),
-    hslToHex(secondColor, saturation, lightness + 5),
-    hslToHex(thirdColor, saturation, lightness - 5),
-    hslToHex(fourthColor, saturation, lightness + 10),
+    hslToHex(secondColor, saturation, lightness + 40),
+    hslToHex(thirdColor, saturation, lightness + 45),
+    hslToHex(fourthColor, saturation, lightness),
+    hslToHex(fifthColor, saturation, lightness + 10)
   ];
+
+  return {
+    bg: colors[1],
+    surface: colors[2],
+    text: colors[2],
+    primary: colors[0],
+    secondary: colors[3]
+  }
 }
