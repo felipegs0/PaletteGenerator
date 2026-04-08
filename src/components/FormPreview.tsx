@@ -79,7 +79,7 @@ function FormPreview({
             </p>
           </div>
 
-          <form className="space-y-5">
+          <div className="space-y-5">
             <div>
               <label className="mb-2 block text-sm font-semibold" htmlFor="name">
                 Nome
@@ -108,7 +108,7 @@ function FormPreview({
                 <input
                   id="email"
                   type="email"
-                  placeholder="voce@empresa.com"
+                  placeholder="voce@gmail.com"
                   className="w-full rounded-xl border px-4 py-3 outline-none"
                   style={{
                     borderColor: primary,
@@ -123,12 +123,12 @@ function FormPreview({
                   className="mb-2 block text-sm font-semibold"
                   htmlFor="company"
                 >
-                  Empresa
+                  Telefone
                 </label>
                 <input
                   id="company"
-                  type="text"
-                  placeholder="Nome da empresa"
+                  type="tel"
+                  placeholder="Número de telefone"
                   className="w-full rounded-xl border px-4 py-3 outline-none"
                   style={{
                     borderColor: primary,
@@ -181,21 +181,20 @@ function FormPreview({
 
             <div className="flex flex-col gap-3 pt-2 sm:flex-row">
               <button
-                type="submit"
-                className="rounded-xl px-6 py-3 font-bold transition-opacity hover:opacity-90"
+                className="rounded-xl px-6 py-3 font-bold transition-opacity hover:opacity-90 cursor-pointer"
                 style={{ backgroundColor: primary, color: surface }}
               >
                 Enviar formulario
               </button>
               <button
                 type="button"
-                className="rounded-xl border px-6 py-3 font-semibold"
-                style={{ borderColor: secondary, color: text }}
+                className="rounded-xl border px-6 py-3 font-semibold cursor-pointer"
+                style={{ borderColor: primary, color: text }}
               >
                 Salvar rascunho
               </button>
             </div>
-          </form>
+          </div>
         </section>
       </div>
     </div>
