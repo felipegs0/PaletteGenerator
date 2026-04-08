@@ -5,7 +5,6 @@ import { generatePalette } from "./utils/generatePalette";
 import ColorRoot from "./components/ColorRoot";
 import DefaultPreview from "./components/DefaultPreview";
 import FormPreview from "./components/FormPreview";
-import defaultPreview from "./components/DefaultPreview";
 
 type PaletteType = "triad" | "complementary" | "mono" | "analog";
 type PreviewType = "default" | "form";
@@ -20,7 +19,7 @@ type PaletteColors = {
 
 const Previews = {
   form: FormPreview,
-  default: defaultPreview
+  default: DefaultPreview,
 };
 
 function App() {
@@ -62,9 +61,7 @@ function App() {
                 }
                 value={typePalette}
               >
-                <option value="mono">
-                  Monocromático
-                </option>
+                <option value="mono">Monocromático</option>
                 <option value="complementary">Complementar</option>
                 <option value="triad">Tríade</option>
                 <option value="analog">Análogo</option>
@@ -86,9 +83,7 @@ function App() {
                 }
                 value={typePreview}
               >
-                <option value="default">
-                  Padrão
-                </option>
+                <option value="default">Padrão</option>
                 <option value="form">Formulário</option>
               </select>
             </>
