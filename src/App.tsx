@@ -4,8 +4,11 @@ import "./App.css";
 import { generatePalette } from "./utils/generatePalette";
 import ColorRoot from "./components/ColorRoot";
 import DefaultPreview from "./components/DefaultPreview";
+import FormPreview from "./components/FormPreview";
+import defaultPreview from "./components/DefaultPreview";
 
 type PaletteType = "triad" | "complementary" | "mono" | "analog";
+type PreviewType = "default" | "form";
 
 type PaletteColors = {
   bg: string;
@@ -13,15 +16,23 @@ type PaletteColors = {
   text: string;
   primary: string;
   secondary: string;
-}
+};
+
+const Previews = {
+  form: FormPreview,
+  default: defaultPreview
+};
 
 function App() {
   const [palette, setPalette] = useState<PaletteColors | null>(null);
-  const [type, setType] = useState<PaletteType>("mono");
+  const [typePalette, setTypePalette] = useState<PaletteType>("mono");
+  const [typePreview, setTypePreview] = useState<PreviewType>("default");
   const [mode, setMode] = useState(true);
 
-  const generateRandom = (type: PaletteType) => {
-    setPalette(generatePalette(type));
+  const PreviewComponent = Previews[typePreview];
+
+  const generateRandom = (typePalette: PaletteType) => {
+    setPalette(generatePalette(typePalette));
   };
 
   const exportCSS = () => {
@@ -35,29 +46,57 @@ function App() {
     <>
       <div className="max-w-8xl mx-auto px-6 flex shadow-2xl">
         <div className="bg-[#1b1f2b] flex flex-col p-7 border border-[#ffffff13] rounded-bl-md rounded-tl-md">
-          <label
-            htmlFor="colorOption"
-            className="text-white font-semibold mb-2"
-          >
-            Tipo:{" "}
-          </label>
-          <select
-            name="colorOption"
-            className="text-white bg-[#151922] border border-[#ffffff2d] p-2 w-55 rounded-md mb-4  outline-none"
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              setType(e.target.value as PaletteType)
-            }
-          >
-            <option value="mono" selected>
-              Monocromático
-            </option>
-            <option value="complementary">Complementar</option>
-            <option value="triad">Tríade</option>
-            <option value="analog">Análogo</option>
-          </select>
+          {mode ? (
+            <>
+              <label
+                htmlFor="colorOption"
+                className="text-white font-semibold mb-2"
+              >
+                Tipo de paleta:{" "}
+              </label>
+              <select
+                name="colorOption"
+                className="text-white bg-[#151922] border border-[#ffffff2d] p-2 w-55 rounded-md mb-4  outline-none"
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  setTypePalette(e.target.value as PaletteType)
+                }
+                value={typePalette}
+              >
+                <option value="mono">
+                  Monocromático
+                </option>
+                <option value="complementary">Complementar</option>
+                <option value="triad">Tríade</option>
+                <option value="analog">Análogo</option>
+              </select>
+            </>
+          ) : (
+            <>
+              <label
+                htmlFor="colorOption"
+                className="text-white font-semibold mb-2"
+              >
+                Tipo de preview:{" "}
+              </label>
+              <select
+                name="previewOption"
+                className="text-white bg-[#151922] border border-[#ffffff2d] p-2 w-55 rounded-md mb-4  outline-none"
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  setTypePreview(e.target.value as PreviewType)
+                }
+                value={typePreview}
+              >
+                <option value="default">
+                  Padrão
+                </option>
+                <option value="form">Formulário</option>
+              </select>
+            </>
+          )}
+
           <button
             className="bg-[#f89917] py-3 rounded-md font-semibold cursor-pointer"
-            onClick={() => generateRandom(type)}
+            onClick={() => generateRandom(typePalette)}
           >
             Gerar Paleta
           </button>
@@ -98,8 +137,14 @@ function App() {
               </div>
             </>
           ) : palette ? (
-            <DefaultPreview bg={palette.bg} surface={palette.surface} text={palette.text} primary={palette.primary} secondary={palette.secondary}/>
-          ) : null }
+            <PreviewComponent
+              bg={palette.bg}
+              surface={palette.surface}
+              text={palette.text}
+              primary={palette.primary}
+              secondary={palette.secondary}
+            />
+          ) : null}
         </div>
       </div>
     </>
