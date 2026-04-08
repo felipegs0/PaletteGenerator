@@ -11,9 +11,6 @@ type HSL = {
 import { hslToHex } from "./colorHelpers";
 
 export function generatePalette(type: PaletteType) {
-  const paletteHSL = {
-    baseHue: Math.random() * 360,
-  };
 
   if (type == "triad") {
     return triadPalette({baseHue: Math.random() * 360, saturation: 70, lightness: 0});
@@ -37,11 +34,11 @@ function triadPalette({ baseHue, saturation, lightness }: HSL) {
   const thirdHue = (baseHue + 240) % 360;
 
   const colors = [
-    hslToHex(baseHue, saturation, lightness + 50),
-    hslToHex(baseHue, saturation, lightness + 15),
+    hslToHex(baseHue, saturation, lightness + 40),
+    hslToHex(baseHue, saturation, lightness + 10),
     hslToHex(secondHue, saturation, lightness + 50),
     hslToHex(secondHue, saturation, lightness + 98),
-    hslToHex(thirdHue, saturation, lightness + 95),
+    hslToHex(thirdHue, saturation - 20, lightness + 85),
   ]
 
   return {
@@ -96,17 +93,17 @@ function analogPalette({ baseHue, saturation, lightness }: HSL) {
   const fifthColor = (baseHue - 60 + 360) % 360;
 
   const colors = [
-    hslToHex(baseHue, saturation, lightness),
-    hslToHex(secondColor, saturation, lightness + 40),
+    hslToHex(baseHue, saturation + 20, lightness - 10),
+    hslToHex(secondColor, saturation, lightness + 25),
     hslToHex(thirdColor, saturation, lightness + 45),
     hslToHex(fourthColor, saturation, lightness),
-    hslToHex(fifthColor, saturation, lightness + 10)
+    hslToHex(fifthColor, saturation, lightness - 40)
   ];
 
   return {
     bg: colors[1],
     surface: colors[2],
-    text: colors[2],
+    text: colors[4],
     primary: colors[0],
     secondary: colors[3]
   }
