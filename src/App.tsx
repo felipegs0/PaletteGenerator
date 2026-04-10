@@ -1,11 +1,11 @@
 import { useState } from "react";
-import ColorCard from "./components/ColorCard";
+import ColorCard from "./components/color/ColorCard.tsx";
 import "./App.css";
 import { generatePalette } from "./utils/generatePalette";
-import ColorRoot from "./components/ColorRoot";
-import DefaultPreview from "./components/DefaultPreview";
-import FormPreview from "./components/FormPreview";
-import EcommercePreview from "./components/EcommercePreview";
+import ColorRoot from "./components/color/ColorRoot.tsx";
+import DefaultPreview from "./components/preview/DefaultPreview.tsx";
+import FormPreview from "./components/preview/FormPreview.tsx";
+import EcommercePreview from "./components/preview/EcommercePreview.tsx";
 
 type PaletteType = "triad" | "complementary" | "mono" | "analog";
 type PreviewType = "default" | "form" | "ecommerce";

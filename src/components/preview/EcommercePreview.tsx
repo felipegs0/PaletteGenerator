@@ -1,4 +1,5 @@
 import { FaCartPlus, FaSearch } from "react-icons/fa";
+import CardEcommerce from "../ui/CardEcommerce.tsx";
 
 type PaletteColors = {
   bg: string;
@@ -7,27 +8,6 @@ type PaletteColors = {
   primary: string;
   secondary: string;
 };
-
-const featuredProducts = [
-  {
-    title: "Fone Orbit Pro",
-    category: "Audio premium",
-    price: "R$ 899",
-    badge: "Mais vendido",
-  },
-  {
-    title: "Camera Nova X",
-    category: "Home studio",
-    price: "R$ 1.299",
-    badge: "Lancamento",
-  },
-  {
-    title: "Smartwatch Pulse",
-    category: "Rotina fitness",
-    price: "R$ 649",
-    badge: "-18%",
-  },
-];
 
 const categories = ["Audio", "Wearables", "Casa", "Acessorios", "Roupas"];
 
@@ -230,13 +210,11 @@ function EcommercePreview({
               <p className="text-sm uppercase tracking-[0.3em] opacity-55">
                 Destaques da semana
               </p>
-              <h2 className="mt-2 text-3xl font-black">
-                Produtos em evidencia
-              </h2>
+              <h2 className="mt-2 text-3xl font-black">Produtos em destaque</h2>
             </div>
             <a
               href="#"
-              className="text-sm font-semibold"
+              className="text-sm font-semibold hover:underline"
               style={{ color: primary }}
             >
               Ver todos
@@ -244,48 +222,36 @@ function EcommercePreview({
           </div>
 
           <div className="grid gap-6 md:grid-cols-3">
-            {featuredProducts.map((product, index) => (
-              <article
-                key={product.title}
-                className="overflow-hidden rounded-[1.75rem] shadow-lg"
-                style={{ backgroundColor: surface }}
-              >
-                <div
-                  className="relative h-56"
-                  style={{
-                    background: `linear-gradient(140deg, ${secondary} 0%, ${primary} ${55 + index * 10}%, ${bg} 100%)`,
-                  }}
-                >
-                  <span
-                    className="absolute left-4 top-4 rounded-full px-3 py-2 text-xs font-bold"
-                    style={{ backgroundColor: bg, color: primary }}
-                  >
-                    {product.badge}
-                  </span>
-                </div>
-
-                <div className="p-6">
-                  <p className="text-sm font-semibold opacity-55">
-                    {product.category}
-                  </p>
-                  <h3 className="mt-2 text-2xl font-black">{product.title}</h3>
-                  <div className="mt-6 flex items-center justify-between">
-                    <strong
-                      className="text-2xl font-black"
-                      style={{ color: primary }}
-                    >
-                      {product.price}
-                    </strong>
-                    <button
-                      className="rounded-full px-5 py-2.5 text-sm font-bold cursor-pointer"
-                      style={{ backgroundColor: primary, color: surface }}
-                    >
-                      Adicionar
-                    </button>
-                  </div>
-                </div>
-              </article>
-            ))}
+            <CardEcommerce
+              bg={bg}
+              surface={surface}
+              primary={primary}
+              secondary={secondary}
+              category="Home studio"
+              title="Camera Nova X"
+              price={1299}
+              badge={"Mais vendido"}
+            />
+            <CardEcommerce
+              bg={bg}
+              surface={surface}
+              primary={primary}
+              secondary={secondary}
+              category="Audio premium"
+              title="Fone Orbit Pro"
+              price={899}
+              badge="Lançamento"
+            />
+            <CardEcommerce
+              bg={bg}
+              surface={surface}
+              primary={primary}
+              secondary={secondary}
+              category="Rotina fitness"
+              title="Smartwatch Pulse"
+              price={649}
+              badge="-18%"
+            />
           </div>
         </section>
 
@@ -303,32 +269,20 @@ function EcommercePreview({
               Monte seu escritorio ideal
             </h2>
             <p className="mt-4 max-w-md opacity-75">
-              Combine monitor, audio, iluminacao e acessorios em uma secao que
-              ajuda a avaliar leitura de blocos longos e botoes secundarios.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
+              asperiores assumenda consequuntur debitis doloremque.
             </p>
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               <div
                 className="rounded-3xl p-5"
                 style={{ backgroundColor: `${surface}F2` }}
               >
-                <p className="text-sm opacity-60">Ticket medio</p>
+                <p className="text-sm opacity-60">Preço médio</p>
                 <strong
                   className="mt-2 block text-3xl font-black"
                   style={{ color: primary }}
                 >
-                  R$ 1.480
-                </strong>
-              </div>
-              <div
-                className="rounded-3xl p-5"
-                style={{ backgroundColor: `${surface}F2` }}
-              >
-                <p className="text-sm opacity-60">Avaliacao</p>
-                <strong
-                  className="mt-2 block text-3xl font-black"
-                  style={{ color: primary }}
-                >
-                  4.9/5
+                  R$ 1.980
                 </strong>
               </div>
             </div>
@@ -341,10 +295,10 @@ function EcommercePreview({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm uppercase tracking-[0.3em] opacity-55">
-                  Newsletter
+                  Alerta de preço
                 </p>
                 <h2 className="mt-2 text-3xl font-black">
-                  Receba ofertas e lancamentos
+                  Receba ofertas e lançamentos
                 </h2>
               </div>
               <span
@@ -356,12 +310,13 @@ function EcommercePreview({
             </div>
 
             <div className="mt-6 grid gap-4 sm:grid-cols-[1fr_auto]">
-              <div
+              <input
+                type="email"
                 className="rounded-2xl border px-5 py-4"
                 style={{ borderColor: `${primary}25`, backgroundColor: bg }}
-              >
-                seuemail@exemplo.com
-              </div>
+                placeholder="seuemail@exemplo.com"
+              ></input>
+
               <button
                 className="rounded-2xl px-6 py-4 font-bold cursor-pointer"
                 style={{ backgroundColor: primary, color: surface }}
@@ -374,7 +329,7 @@ function EcommercePreview({
               {[
                 "Descontos exclusivos",
                 "Alertas de estoque",
-                "Selecao mensal",
+                "Seleção mensal",
               ].map((benefit) => (
                 <div
                   key={benefit}
