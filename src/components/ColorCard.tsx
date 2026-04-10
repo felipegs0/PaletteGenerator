@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 
 function ColorCard({ color }: { color: string }) {
   const [hover, setHover] = useState(false);
@@ -15,24 +15,27 @@ function ColorCard({ color }: { color: string }) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      {hover && (
-        <motion.div
-          initial={{ opacity: 1, y: 900 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="absolute -inset-px flex flex-col justify-end rounded-[inherit] bg-linear-to-t from-black/96 via-black/38 to-black/2 p-4"
-        >
-          <p className="mb-3 text-center text-lg font-semibold tracking-[0.18em] text-white/95 uppercase">
-            {color}
-          </p>
-          <button
-            className="w-full rounded-lg border border-white/20 bg-white/12 px-4 py-2 text-sm font-semibold tracking-[0.16em] text-white uppercase cursor-pointer transition duration-200 hover:bg-white hover:text-black"
-            onClick={copyColor}
+      <AnimatePresence>
+        {hover && (
+          <motion.div
+            initial={{ opacity: 1, y: 500 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 1, y: 500 }}
+            transition={{ duration: 0.4, ease: "easeIn" }}
+            className="absolute -inset-px flex flex-col justify-center rounded-[inherit] bg-black/60 p-4"
           >
-            Copiar
-          </button>
-        </motion.div>
-      )}
+            <p className="mb-3 text-center text-lg font-semibold tracking-[0.18em] text-white/95 uppercase">
+              {color}
+            </p>
+            <button
+              className="w-full rounded-lg border border-white/20 bg-white/12 px-4 py-2 text-sm font-semibold tracking-[0.16em] text-white uppercase cursor-pointer transition duration-200 hover:bg-white hover:text-black"
+              onClick={copyColor}
+            >
+              Copiar
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
