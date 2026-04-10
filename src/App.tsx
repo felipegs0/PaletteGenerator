@@ -33,7 +33,7 @@ function App() {
   const PreviewComponent = previews[typePreview];
 
   const generateRandom = (currentPaletteType: PaletteType) => {
-    setPalette(generatePalette(currentPaletteType));
+    setPalette(generatePalette(currentPaletteType) ?? null);
   };
 
   const exportCSS = () => {

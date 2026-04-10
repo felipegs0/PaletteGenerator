@@ -11,7 +11,6 @@ function DefaultPreview({
   surface,
   text,
   primary,
-  secondary,
 }: PaletteColors) {
   return (
     <>
