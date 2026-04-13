@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
-function ColorCard({ color }: { color: string }) {
+function ColorCard({ color, role }: { color: string, role: string }) {
   const [hover, setHover] = useState(false);
 
   const copyColor = () => {
@@ -24,6 +24,9 @@ function ColorCard({ color }: { color: string }) {
             transition={{ duration: 0.4, ease: "easeIn" }}
             className="absolute -inset-px flex flex-col justify-center rounded-[inherit] bg-black/60 p-4"
           >
+            <p className="mb-1 text-center text-lg font-semibold tracking-[0.18em] text-white/95 uppercase">
+              {role}
+            </p>
             <p className="mb-3 text-center text-lg font-semibold tracking-[0.18em] text-white/95 uppercase">
               {color}
             </p>

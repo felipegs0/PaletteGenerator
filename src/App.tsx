@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ColorCard from "./components/color/ColorCard.tsx";
 import "./App.css";
 import { generatePalette } from "./utils/generatePalette";
@@ -6,6 +6,7 @@ import ColorRoot from "./components/color/ColorRoot.tsx";
 import DefaultPreview from "./components/preview/DefaultPreview.tsx";
 import FormPreview from "./components/preview/FormPreview.tsx";
 import EcommercePreview from "./components/preview/EcommercePreview.tsx";
+import LoadingDots from "./components/ui/LoadingDots.tsx"
 
 type PaletteType = "triad" | "complementary" | "mono" | "analog";
 type PreviewType = "default" | "form" | "ecommerce";
@@ -36,6 +37,10 @@ function App() {
     setPalette(generatePalette(currentPaletteType) ?? null);
   };
 
+  useEffect(() => {
+    generateRandom(typePalette);
+  }, []);
+
   const exportCSS = () => {
     if (!palette) return;
 
@@ -49,7 +54,10 @@ function App() {
       <div className="bg-[#1b1f2b] flex flex-col p-7 border border-[#ffffff13] rounded-bl-md rounded-tl-md">
         {mode ? (
           <>
-            <label htmlFor="colorOption" className="text-white font-semibold mb-2">
+            <label
+              htmlFor="colorOption"
+              className="text-white font-semibold mb-2"
+            >
               Tipo de paleta:
             </label>
             <select
@@ -69,7 +77,10 @@ function App() {
           </>
         ) : (
           <>
-            <label htmlFor="previewOption" className="text-white font-semibold mb-2">
+            <label
+              htmlFor="previewOption"
+              className="text-white font-semibold mb-2"
+            >
               Tipo de preview:
             </label>
             <select
@@ -107,12 +118,14 @@ function App() {
           <>
             <div className="grid grid-cols-5 gap-2 w-270 p-7 h-250">
               {Object.entries(palette).map(([key, color]) => (
-                <ColorCard key={key} color={color} />
+                <ColorCard key={key} role={key} color={color} />
               ))}
             </div>
 
             <div className="bg-[#141821] flex flex-col border-t border-[#ffffff1f] p-7">
-              <p className="text-white text-xl font-semibold mb-3">Exportar CSS:</p>
+              <p className="text-white text-xl font-semibold mb-3">
+                Exportar CSS:
+              </p>
               <div className="bg-[#141821] flex flex-col p-5 border border-[#ffffff23] rounded-md relative">
                 <p className="text-white font-mono">:root {" { "}</p>
                 <div className="flex flex-col pl-5">
@@ -138,7 +151,9 @@ function App() {
             primary={palette.primary}
             secondary={palette.secondary}
           />
-        ) : null}
+        ) : (<div className="w-270 h-full flex items-center justify-center">
+          <LoadingDots />
+        </div>)}
       </div>
     </div>
   );
