@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
-function ColorCard({ color, role }: { color: string, role: string }) {
+function ColorCard({ color, role, onCopy }: { color: string, role: string, onCopy?: () => void }) {
   const [hover, setHover] = useState(false);
 
   const copyColor = () => {
     navigator.clipboard.writeText(color);
+    onCopy();
   };
 
   return (

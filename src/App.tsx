@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { AnimatePresence } from "motion/react";
 import ColorCard from "./components/color/ColorCard.tsx";
 import "./App.css";
 import { generatePalette } from "./utils/generatePalette";
@@ -6,7 +7,8 @@ import ColorRoot from "./components/color/ColorRoot.tsx";
 import DefaultPreview from "./components/preview/DefaultPreview.tsx";
 import FormPreview from "./components/preview/FormPreview.tsx";
 import EcommercePreview from "./components/preview/EcommercePreview.tsx";
-import LoadingDots from "./components/ui/LoadingDots.tsx"
+import LoadingDots from "./components/ui/LoadingDots.tsx";
+import Toast from "./components/ui/Toast.tsx";
 
 type PaletteType = "triad" | "complementary" | "mono" | "analog";
 type PreviewType = "default" | "form" | "ecommerce";
@@ -30,6 +32,12 @@ function App() {
   const [typePalette, setTypePalette] = useState<PaletteType>("mono");
   const [typePreview, setTypePreview] = useState<PreviewType>("default");
   const [mode, setMode] = useState(true);
+  const [toast, setToast] = useState(false);
+
+  const showToast = () => {
+    setToast(true);
+    setTimeout(() => setToast(false), 1500);
+  };
 
   const PreviewComponent = previews[typePreview];
 
@@ -51,6 +59,7 @@ function App() {
 
   return (
     <div className="max-w-8xl mx-auto px-6 flex shadow-2xl">
+      <AnimatePresence>{toast && <Toast />}</AnimatePresence>
       <div className="bg-[#1b1f2b] flex flex-col p-7 border border-[#ffffff13] rounded-bl-md rounded-tl-md">
         {mode ? (
           <>
@@ -118,7 +127,12 @@ function App() {
           <>
             <div className="grid grid-cols-5 gap-2 w-270 p-7 h-250">
               {Object.entries(palette).map(([key, color]) => (
-                <ColorCard key={key} role={key} color={color} />
+                <ColorCard
+                  key={key}
+                  role={key}
+                  color={color}
+                  onCopy={showToast}
+                />
               ))}
             </div>
 
@@ -151,9 +165,11 @@ function App() {
             primary={palette.primary}
             secondary={palette.secondary}
           />
-        ) : (<div className="w-270 h-full flex items-center justify-center">
-          <LoadingDots />
-        </div>)}
+        ) : (
+          <div className="w-270 h-full flex items-center justify-center">
+            <LoadingDots />
+          </div>
+        )}
       </div>
     </div>
   );
