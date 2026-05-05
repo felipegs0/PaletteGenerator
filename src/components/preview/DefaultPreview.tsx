@@ -1,10 +1,4 @@
-type PaletteColors = {
-  bg: string;
-  surface: string;
-  text: string;
-  primary: string;
-  secondary: string;
-}
+import type { PaletteColors } from "../../types/palette.ts";
 
 function DefaultPreview({
   bg,

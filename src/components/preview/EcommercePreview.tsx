@@ -1,13 +1,7 @@
 import { FaCartPlus, FaSearch } from "react-icons/fa";
 import CardEcommerce from "../ui/CardEcommerce.tsx";
 
-type PaletteColors = {
-  bg: string;
-  surface: string;
-  text: string;
-  primary: string;
-  secondary: string;
-};
+import type { PaletteColors } from "../../types/palette.ts";
 
 const categories = ["Audio", "Wearables", "Casa", "Acessorios", "Roupas"];
 
@@ -124,7 +118,7 @@ function EcommercePreview({
                     key={item}
                     className="rounded-2xl flex justify-center border px-4 py-4"
                     style={{
-                      backgroundColor: `${bg}B3`,
+                      backgroundColor: `${surface}BF`,
                       borderColor: `${secondary}20`,
                     }}
                   >

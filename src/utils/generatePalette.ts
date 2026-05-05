@@ -1,10 +1,5 @@
-type PaletteType = "triad" | "complementary" | "mono" | "analog";
-
-type HSL = {
-  baseHue: number;
-  saturation: number;
-  lightness: number;
-};
+import type { PaletteType } from "../types/palette.ts"
+import type { HSL } from "../types/color.ts"
 
 // Criar uma config para cada paleta depois usando objeto
 

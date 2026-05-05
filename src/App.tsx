@@ -9,17 +9,13 @@ import FormPreview from "./components/preview/FormPreview.tsx";
 import EcommercePreview from "./components/preview/EcommercePreview.tsx";
 import LoadingDots from "./components/ui/LoadingDots.tsx";
 import Toast from "./components/ui/Toast.tsx";
+import logo from "./assets/palettegeneratorlogo.webp"
 
-type PaletteType = "triad" | "complementary" | "mono" | "analog";
-type PreviewType = "default" | "form" | "ecommerce";
-
-type PaletteColors = {
-  bg: string;
-  surface: string;
-  text: string;
-  primary: string;
-  secondary: string;
-};
+import type {
+  PaletteType,
+  PreviewType,
+  PaletteColors,
+} from "./types/palette.ts";
 
 const previews = {
   form: FormPreview,
@@ -55,14 +51,19 @@ function App() {
     const variables = Object.values(palette).join("\n");
     const css = `:root {\n${variables}\n}`;
     navigator.clipboard.writeText(css);
+
+    showToast();
   };
 
   return (
     <div className="max-w-8xl mx-auto px-6 flex shadow-2xl">
       <AnimatePresence>{toast && <Toast />}</AnimatePresence>
-      <div className="bg-[#1b1f2b] flex flex-col p-7 border border-[#ffffff13] rounded-bl-md rounded-tl-md">
+      <div className="bg-[#1b1f2b] flex flex-col border border-[#ffffff13] rounded-bl-md rounded-tl-md w-82">
+        <div className="w-full px-2 py-3 mb-4 flex bg-[#141821] border-b border-white/10  rounded-tl-md">
+          <img className="h-12 px-3 object-contain opacity-90" src={logo} />
+        </div>
         {mode ? (
-          <>
+          <div className="px-7 flex flex-col">
             <label
               htmlFor="colorOption"
               className="text-white font-semibold mb-2"
@@ -72,20 +73,20 @@ function App() {
             <select
               id="colorOption"
               name="colorOption"
-              className="text-white bg-[#151922] border border-[#ffffff2d] p-2 w-55 rounded-md mb-4 outline-none"
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                setTypePalette(e.target.value as PaletteType)
-              }
+              className="text-white bg-[#151922] border border-[#ffffff2d] p-2 w-full rounded-md mb-4 outline-none"
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                setTypePalette(e.target.value as PaletteType);
+              }}
               value={typePalette}
             >
               <option value="mono">Monocromatico</option>
               <option value="complementary">Complementar</option>
               <option value="triad">Triade</option>
-              <option value="analog">Analogico</option>
+              <option value="analog">Análogo</option>
             </select>
-          </>
+          </div>
         ) : (
-          <>
+          <div className="px-7 flex flex-col">
             <label
               htmlFor="previewOption"
               className="text-white font-semibold mb-2"
@@ -95,7 +96,7 @@ function App() {
             <select
               id="previewOption"
               name="previewOption"
-              className="text-white bg-[#151922] border border-[#ffffff2d] p-2 w-55 rounded-md mb-4 outline-none"
+              className="text-white bg-[#151922] border border-[#ffffff2d] p-2 w-full rounded-md mb-4 outline-none"
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                 setTypePreview(e.target.value as PreviewType)
               }
@@ -105,21 +106,22 @@ function App() {
               <option value="form">Formulario</option>
               <option value="ecommerce">E-commerce</option>
             </select>
-          </>
+          </div>
         )}
-
-        <button
-          className="bg-[#f89917] py-3 rounded-md font-semibold cursor-pointer"
-          onClick={() => generateRandom(typePalette)}
-        >
-          Gerar Paleta
-        </button>
-        <button
-          className="bg-[#00000046] text-white border-[#f89917] border-2 py-3 rounded-md font-semibold cursor-pointer mt-4"
-          onClick={() => setMode(!mode)}
-        >
-          {mode ? "Visualizar Preview" : "Visualizar Paleta"}
-        </button>
+        <div className="px-7 flex flex-col">
+          <button
+            className="bg-[#f89917] py-3 rounded-md font-semibold cursor-pointer"
+            onClick={() => generateRandom(typePalette)}
+          >
+            Gerar Paleta
+          </button>
+          <button
+            className="bg-[#00000046] text-white border-[#f89917] border-2 py-3 rounded-md font-semibold cursor-pointer mt-4"
+            onClick={() => setMode(!mode)}
+          >
+            {mode ? "Visualizar Preview" : "Visualizar Paleta"}
+          </button>
+        </div>
       </div>
 
       <div className="bg-[#141821] flex flex-col h-[85vh] border border-[#ffffff13] rounded-br-md rounded-tr-md">

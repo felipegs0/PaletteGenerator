@@ -1,10 +1,6 @@
-type PaletteColors = {
-  bg: string;
-  surface: string;
-  text: string;
-  primary: string;
-  secondary: string;
-};
+import { motion } from 'motion/react'
+
+import type { PaletteColors } from "../../types/palette.ts";
 
 function FormPreview({
   bg,
@@ -30,11 +26,14 @@ function FormPreview({
             Fale com a equipe e receba uma proposta sob medida.
           </h1>
           <p className="max-w-xl text-lg opacity-80">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus atque consequatur dolorum, excepturi iusto modi omnis praesentium quae?
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
+            atque consequatur dolorum, excepturi iusto modi omnis praesentium
+            quae?
           </p>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
-            <div
+            <motion.div
+              whileHover={{ scale: 1.04 }}
               className="rounded-2xl p-5 shadow-md"
               style={{ backgroundColor: surface }}
             >
@@ -46,15 +45,18 @@ function FormPreview({
                 24h
               </strong>
               <p className="mt-2 text-sm opacity-75">
-                Retorno para novos contatos comerciais.
+                Lorem ipsum dolor sit amet.
               </p>
-            </div>
+            </motion.div>
 
-            <div
+            <motion.div
+              whileHover={{ scale: 1.04 }}
               className="rounded-2xl p-5 shadow-md"
               style={{ backgroundColor: surface }}
             >
-              <p className="text-sm font-semibold opacity-70">Projetos ativos</p>
+              <p className="text-sm font-semibold opacity-70">
+                Projetos ativos
+              </p>
               <strong
                 className="mt-2 block text-3xl font-black"
                 style={{ color: primary }}
@@ -62,9 +64,9 @@ function FormPreview({
                 +120
               </strong>
               <p className="mt-2 text-sm opacity-75">
-                Empresas utilizando identidades geradas pela plataforma.
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               </p>
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -81,7 +83,10 @@ function FormPreview({
 
           <div className="space-y-5">
             <div>
-              <label className="mb-2 block text-sm font-semibold" htmlFor="name">
+              <label
+                className="mb-2 block text-sm font-semibold"
+                htmlFor="name"
+              >
                 Nome
               </label>
               <input
@@ -140,7 +145,10 @@ function FormPreview({
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold" htmlFor="goal">
+              <label
+                className="mb-2 block text-sm font-semibold"
+                htmlFor="goal"
+              >
                 Objetivo
               </label>
               <select
@@ -179,19 +187,12 @@ function FormPreview({
               />
             </div>
 
-            <div className="flex flex-col gap-3 pt-2 sm:flex-row">
+            <div className="flex flex-col gap-3 pt-2 sm:flex-row justify-end">
               <button
                 className="rounded-xl px-6 py-3 font-bold transition-opacity hover:opacity-90 cursor-pointer"
                 style={{ backgroundColor: primary, color: surface }}
               >
-                Enviar formulario
-              </button>
-              <button
-                type="button"
-                className="rounded-xl border px-6 py-3 font-semibold cursor-pointer"
-                style={{ borderColor: primary, color: text }}
-              >
-                Salvar rascunho
+                Enviar
               </button>
             </div>
           </div>
