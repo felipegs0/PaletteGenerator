@@ -10,6 +10,7 @@ import EcommercePreview from "./components/preview/EcommercePreview.tsx";
 import LoadingDots from "./components/ui/LoadingDots.tsx";
 import Toast from "./components/ui/Toast.tsx";
 import logo from "./assets/palettegeneratorlogo.webp"
+import { FaGear } from "react-icons/fa6";
 
 import type {
   PaletteType,
